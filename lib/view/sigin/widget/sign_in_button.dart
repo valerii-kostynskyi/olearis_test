@@ -21,12 +21,13 @@ class SignInButton extends StatelessWidget {
             ? Theme.of(context).focusColor
             : Theme.of(context).disabledColor,
       ),
-      onPressed: state is SignInLoading || !isInputValid ? () {} : onPressed,
+      onPressed:
+          state is SignInLoadingState || !isInputValid ? () {} : onPressed,
       child: SizedBox(
         width: 100,
         height: 30,
         child: Center(
-          child: state is SignInLoading
+          child: state is SignInLoadingState
               ? SizedBox(
                   width: 20,
                   height: 20,

@@ -7,14 +7,14 @@ sealed class SignInState extends Equatable {
   List<Object> get props => [];
 }
 
-final class SignInInitial extends SignInState {}
+final class SignInInitialState extends SignInState {}
 
-final class SignInLoading extends SignInState {}
+final class SignInLoadingState extends SignInState {}
 
-final class SignInError extends SignInState {
+final class SignInErrorState extends SignInState {
   final String message;
 
-  const SignInError(this.message);
+  const SignInErrorState(this.message);
 
   @override
   List<Object> get props => [message];
