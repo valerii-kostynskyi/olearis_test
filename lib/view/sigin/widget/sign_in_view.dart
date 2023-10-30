@@ -17,56 +17,95 @@ class SignInViewState extends State<SignInView> {
   final TextEditingController _passwordController = TextEditingController();
   bool _passwordVisible = false;
 
+  double _logoOpacity = 0.0;
+  double _inputsOpacity = 0.0;
+  double _buttonOpacity = 0.0;
+
   bool get isInputValid =>
       _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
 
   @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(milliseconds: 200), () {
+      setState(() {
+        _logoOpacity = 1.0;
+      });
+    });
+
+    Future.delayed(const Duration(milliseconds: 600), () {
+      setState(() {
+        _inputsOpacity = 1.0;
+      });
+    });
+
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      setState(() {
+        _buttonOpacity = 1.0;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignInCubit, SignInState>(
-      listener: (context, state) {
-        if (state is SignInError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
+    return LayoutBuilder(
+      builder: (ctx, constraints) => BlocConsumer<SignInCubit, SignInState>(
+        listener: (context, state) {
+          if (state is SignInError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          } else if (state is SignInInitial) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: SizedBox(
+                height: constraints.maxHeight,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: AnimatedOpacity(
+                        opacity: _logoOpacity,
+                        duration: const Duration(milliseconds: 200),
+                        child: const LogoWidget(),
+                      ),
+                    ),
+                    Expanded(
+                      child: AnimatedOpacity(
+                        opacity: _inputsOpacity,
+                        duration: const Duration(milliseconds: 400),
+                        child: _inputsForm(),
+                      ),
+                    ),
+                    AnimatedOpacity(
+                      opacity: _buttonOpacity,
+                      duration: const Duration(milliseconds: 600),
+                      child: _button(state, context),
+                    ),
+                  ],
+                )),
           );
-        } else if (state is SignInInitial) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
-            ),
-          );
-        }
-      },
-      builder: (context, state) {
-        final double heightWorkArea = MediaQuery.of(context).size.height -
-            AppBar().preferredSize.height -
-            kToolbarHeight;
-        return SingleChildScrollView(
-          child: SizedBox(
-            height: heightWorkArea,
-            child: Column(
-              children: [
-                const Expanded(child: LogoWidget()),
-                _inputsForm(),
-                _button(state, context),
-              ],
-            ),
-          ),
-        );
-      },
+        },
+      ),
     );
   }
 
   Widget _inputsForm() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            _email(),
-            _password(),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          _email(),
+          _password(),
+        ],
       ),
     );
   }

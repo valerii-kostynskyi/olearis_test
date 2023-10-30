@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:olearis_test/view/components/logo_widget.dart';
 import 'package:olearis_test/view/home/cubit/home_screen_cubit.dart';
-import 'package:olearis_test/view/home/widget/grid_view.dart';
+import 'package:olearis_test/view/home/widget/custom_grid_view.dart';
 
 class HomeView extends StatelessWidget {
   final GlobalKey _keyGridView = GlobalKey();
