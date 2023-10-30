@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Olearis test',
       theme: lightTheme,
       home: const SignInScreen(),
       debugShowCheckedModeBanner: false,

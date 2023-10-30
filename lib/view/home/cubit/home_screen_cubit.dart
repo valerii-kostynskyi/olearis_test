@@ -7,9 +7,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   HomeScreenCubit()
       : super(
           HomeScreenState(
-            items: List<String>.empty(
-              growable: true,
-            ),
+            items: List<String>.empty(growable: true),
             isScrollable: false,
           ),
         );

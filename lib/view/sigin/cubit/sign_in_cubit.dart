@@ -8,9 +8,7 @@ class SignInCubit extends Cubit<SignInState> {
 
   Future<void> signIn(String email, String password) async {
     emit(SignInLoading());
-
-    await Future.delayed(const Duration(seconds: 0));
-
+    await Future.delayed(const Duration(seconds: 2));
     emit(SignInInitial());
   }
 }
